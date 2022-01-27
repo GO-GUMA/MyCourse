@@ -1,0 +1,48 @@
+{
+    "name": "MyCourse",
+    "description": "Coursemos 기반 E-Learning 플랫폼에서 간편하게 미수강/지각 영상 확인, 다중 영상 재생 등의 다양한 기능을 제공합니다.",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.ac.kr/course/view.php?*"
+            ],
+            "js": [
+                "crawling.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.ac.kr/mod/vod/viewer.php?*"
+            ],
+            "js": [
+                "video.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "video_player.js",
+                "/images/*"
+            ],
+            "matches": [
+                "*://*.ac.kr/*"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "/images/icon.png"
+    },
+    "icons": {
+        "16": "/images/Icon-16.png",
+        "32": "/images/Icon-32.png",
+        "48": "/images/Icon-48.png",
+        "128": "/images/Icon-128.png"
+    }
+}

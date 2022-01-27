@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="popup.css">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="topDiv">
+        <div style="height: 3px"></div>
+        <a>&nbsp;&nbsp;&nbsp; MyCourse</a>
+        <img src="/images/icon.png" height="25px" style="position: absolute; top: 6px; left: 64px;">
+    </div>
+    <div style="height: 12px"></div>
+    <a class="indicateSetting">설정</a>
+    <div class="settingLine"></div>
+    <div class="settingDiv">
+        <div>
+            <a class="tooltip"><span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;">기한이 지난 영상을
+                    자동으로 숨깁니다</span>지난 영상 숨기기</a>
+            <input type="checkbox" name="hidePastSetting" id="hidePastSetting">
+            <label for="hidePastSetting" style="left: 51px;"></label>
+        </div>
+        <div style="height: 3px"></div>
+        <div>
+            <a class="tooltip"><span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px">재생 완료시 창이
+                    자동으로 닫힙니다</span>영상 자동종료</a>
+            <input type="checkbox" name="closeVideoAuto" id="closeVideoAuto">
+            <label for="closeVideoAuto" style="left: 73px;"></label>
+        </div>
+    </div>
+
+    <div class="iconDiv">
+        <a class="tooltip"><i class="fas fa-comment" id="feedback"></i><span class="tooltipText"
+                style="width: 100px;">피드백 남기기</span></a>
+        &nbsp;
+        <a class="tooltip"><i class="fas fa-envelope" id="mailIcon"></i><span class="tooltipText"
+                style="width: 100px;">메일 주소 복사</span></a>
+        &nbsp;
+        <a class="tooltip"><i class="fab fa-github" id="githubIcon"></i><span class="tooltipText"
+                style="width: 60px;">Github</span></a>
+    </div>
+
+    <div class="bottomText">Published by GO-GUMA</div>
+    <div class="versionText">1.0.0</div>
+    <div style="height: 10px;"></div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
