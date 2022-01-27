@@ -30,7 +30,18 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 본 프로그램을 사용함으로써 발생할 수 있는 학업적인 피해는 책임지지 않습니다.  
 본 프로그램을 맹신하지 마시고 프로그램 사용 후 수강이 되었는지 확인해 주시기 바랍니다.  
 
+<br>
 
+## About MyCourse
+> ## 개발자
+> * [Gangsu Kim][GangsuKim]
+> * e-Mail : gangsu1813@naver.com
+
+> ## 개발 언어
+> <img height="30" src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/>
+
+> ## License
+> GNU General Public License v3.0 
 <!-- Markdwon Links-->
-[GansuKim]: https://github.com/GangsuKim
+[GangsuKim]: https://github.com/GangsuKim
 [MyCourseFeedback]: http://go-guma.com/bbs/board.php?bo_table=MyCourse
