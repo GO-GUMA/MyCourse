@@ -167,6 +167,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
 
     if (prograssArr.length == 0) {
         noVideoAlert.innerHTML = '동영상이 없는 강의 입니다';
+        cb_div.hidden = true;
     }
 
     boardDiv.appendChild(noVideoAlert);
