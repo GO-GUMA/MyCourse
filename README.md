@@ -1,11 +1,10 @@
 # MyCourse
-![Generic badge](https://img.shields.io/badge/Version-1.0.0-green.svg)
-![Generic badge](https://img.shields.io/badge/Publishing-1.0.0-green.svg)
-![Generic badge](https://img.shields.io/badge/Pending-1.0.1-orange.svg)  
+![Generic badge](https://img.shields.io/badge/Version-1.0.1-green.svg)
+![Generic badge](https://img.shields.io/badge/Publishing-1.0.1-green.svg)
+![Generic badge](https://img.shields.io/badge/Last_Update-2022Jan28-green.svg)  
 Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램   
 플랫폼에서 간편하게 미수강 강좌와 남은 시간을 알 수 있습니다.  
-<img src="Images/mainGUI_v1.0.1.png" width="300"/>  
-
+<img src="Images/mainGUI_v1.0.1.png" width="300"/>   
 
 ## 기능
 - 강좌의 홈 화면에서 미수강 영상 모아보기
@@ -19,6 +18,11 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 - 영상 배속 기능  
 
 기능 추가에 대한 건의는 [여기][MyCourseFeedback]에서 하실 수 있습니다.
+
+<br>
+
+## 다운로드
+- 크롬 웹 스토어 : [MyCourse][MyCourse_Chrome]
 
 <br>
 
@@ -51,3 +55,7 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 <!-- Markdwon Links-->
 [GangsuKim]: https://github.com/GangsuKim
 [MyCourseFeedback]: http://go-guma.com/bbs/board.php?bo_table=MyCourse
+[MyCourse_Chrome]: https://chrome.google.com/webstore/detail/mycourse/hccakmcanlejgbahgglencckckkbhohn?hl=ko
+
+<!-- ![Generic badge](https://img.shields.io/badge/Pending-1.0.1-orange.svg) -->
+
