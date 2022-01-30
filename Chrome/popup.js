@@ -31,6 +31,16 @@ chrome.storage.sync.get('closeVideoAuto', function (result) {
     }
 });
 
+// language check status
+chrome.storage.sync.get('languageCheck', function (result) {
+    if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
+        chrome.storage.sync.set({ languageCheck: 'ko' }, function () {
+            console.log('[Init setting] Language setted ko');
+        });
+    }
+    // fetch
+});
+
 // Update to storage
 cb_pastVideo = document.getElementById('hidePastSetting');
 cb_pastVideo.addEventListener("click", function () {
@@ -72,4 +82,9 @@ function copyToClipBoard() {
     ta.select();
     document.execCommand('copy')
     document.body.removeChild(ta);
+}
+
+// English button
+document.getElementById('language').onclick = function () {
+    console.log('ok');
 }

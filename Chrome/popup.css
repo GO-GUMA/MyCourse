@@ -152,3 +152,17 @@ a.tooltip:hover span.tooltipText {
 span.tooltipText {
     margin-bottom: -6px;
 }
+
+.language {
+    top: 185px;
+    left: 5px;
+    position: absolute;
+    color: rgb(167, 167, 167);
+    font-size: 17px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.language:hover {
+    color: rgb(80 80 80);
+}

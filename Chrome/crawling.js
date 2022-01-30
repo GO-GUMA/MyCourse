@@ -3,6 +3,15 @@ const prograssURL = "https://smartlead.hallym.ac.kr/report/ubcompletion/user_pro
 var prograssArr = [], missdVideo = []; // prograssArr = ['DONE','LATE','NONE']
 var isHidePast = false; // boolean => is user check hide past
 
+var languageJSON; // JSON Object => language sets for current LMS language
+
+fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language json data from 'language.json'
+    return response.json();
+}).then(jsondata => {
+    console.log('JSON LOADED ' + document.documentElement.lang); // JSON LOADED 'ko' or 'en' or 'ja' or 'zh-cn'
+    languageJSON = jsondata[document.documentElement.lang]; // Set languageJSON Object to current LMS json 
+});
+
 chrome.storage.sync.get('hidePastCheck', function (result) {
     console.log('Value currently is ' + result.hidePastCheck);
     isHidePast = result.hidePastCheck;
@@ -100,7 +109,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
 
     var h2_main = document.createElement('h2');
     h2_main.setAttribute('class', 'main');
-    h2_main.innerHTML = '미수강 강좌';
+    h2_main.innerHTML = languageJSON['title']; // '미수강 강좌';
 
     // CheckBox
     var cb_div = document.createElement('div');
@@ -113,9 +122,9 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
     var cb_input;
 
     if (isHidePast) {
-        cb_input = '<input type="checkbox" name="hidePast" value="hidePast" id="hidePost" checked> 지난 강좌 숨기기';
+        cb_input = '<input type="checkbox" name="hidePast" value="hidePast" id="hidePost" checked>' + languageJSON['cb_text']; // 지난 강좌 숨기기';
     } else {
-        cb_input = '<input type="checkbox" name="hidePast" value="hidePast" id="hidePost"> 지난 강좌 숨기기';
+        cb_input = '<input type="checkbox" name="hidePast" value="hidePast" id="hidePost">' + languageJSON['cb_text']; // 지난 강좌 숨기기';
     }
 
 
@@ -163,10 +172,10 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
     noVideoAlert.setAttribute('style', 'color:#666; text-align: center; margin-top: 10px; font-size: 14px;');
     noVideoAlert.setAttribute('id', 'noVideoAlert');
     noVideoAlert.setAttribute('hidden', true);
-    noVideoAlert.innerHTML = '미수강 영상이 없습니다';
+    noVideoAlert.innerHTML = languageJSON['noMissedVideo']; // '미수강 영상이 없습니다';
 
     if (prograssArr.length == 0) {
-        noVideoAlert.innerHTML = '동영상이 없는 강의 입니다';
+        noVideoAlert.innerHTML = languageJSON['noVideo']; // '동영상이 없는 강의 입니다';
         cb_div.hidden = true;
     }
 
@@ -175,7 +184,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
     var currneTime = new Date();
 
     if (missedCnt == 0 && prograssArr.length != 0) {
-        noVideoAlert.innerHTML = '지난 영상 & 미수강 영상이 없습니다';
+        noVideoAlert.innerHTML = languageJSON['noMissedAndPast']; //'지난 영상 & 미수강 영상이 없습니다';
         noVideoAlert.hidden = false;
         cb_div.hidden = true;
     } else {
@@ -276,10 +285,10 @@ function getContents() { // function getContents() => check readyStatus and run 
 }
 
 function millToTime(clacTime) { // function millToTime(int milliseconds) return 'DD일 HH시 MM분 SS초 남음 or 지남'
-    var leftOrPast = '남음'; // leftOrPast for result String
+    var leftOrPast = languageJSON['timeLeft']; // '남음'; // leftOrPast for result String
 
     if (clacTime < 0) { // if clacTime is lower that o = Video Expired
-        leftOrPast = '지남'; // Change navigator
+        leftOrPast = languageJSON['timePassed']; // '지남'; // Change navigator
     }
 
     var clacTime = (clacTime < 0) ? (clacTime * -1) / 1000 : clacTime / 1000; // Conver Negative to Positive and change to Seconds
@@ -298,6 +307,7 @@ function millToTime(clacTime) { // function millToTime(int milliseconds) return 
     var min = parseInt(dueMinLeft);
     var sec = parseInt(dueSecLeft);
 
-    var result = date + '일 ' + hour + '시간 ' + min + '분 ' + sec + '초 ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
+    var result = date + languageJSON['days'] + ' ' + hour + languageJSON['hours'] + ' ' + min + languageJSON['minutes'] + ' ' + sec + languageJSON['seconds'] + ' ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
+    // var result = date + '일 ' + hour + '시간 ' + min + '분 ' + sec + '초 ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
     return result; // End
 }
