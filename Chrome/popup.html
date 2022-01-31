@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <link rel="stylesheet" href="popup.css">
@@ -15,30 +15,30 @@
         <img src="/images/icon.png" height="25px" style="position: absolute; top: 6px; left: 64px;">
     </div>
     <div style="height: 12px"></div>
-    <a class="indicateSetting">설정</a>
+    <a class="indicateSetting" id="indicateSetting">설정</a>
     <div class="settingLine"></div>
     <div class="settingDiv">
         <div>
-            <a class="tooltip"><span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;">기한이 지난 영상을
-                    자동으로 숨깁니다</span>지난 영상 숨기기</a>
+            <a class="tooltip"><span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;"
+                    id="hidePast_info">기한이 지난 영상을 자동으로 숨깁니다</span><span id="hidePast_text">지난 영상 숨기기</span></a>
             <input type="checkbox" name="hidePastSetting" id="hidePastSetting">
-            <label for="hidePastSetting" style="left: 51px;"></label>
+            <label for="hidePastSetting" style="position: absolute; top: 87px; right: 25px"></label>
         </div>
         <div style="height: 3px"></div>
         <div>
-            <a class="tooltip"><span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px">재생 완료시 창이
-                    자동으로 닫힙니다</span>영상 자동종료</a>
+            <a class="tooltip"><span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px"
+                    id="closeVideoAuto_info">재생 완료시 창이 자동으로 닫힙니다</span><span id="closeVideoAuto_text">영상 자동종료</span></a>
             <input type="checkbox" name="closeVideoAuto" id="closeVideoAuto">
-            <label for="closeVideoAuto" style="left: 73px;"></label>
+            <label for="closeVideoAuto" style="position: absolute; top: 112px; right: 25px"></label>
         </div>
     </div>
 
     <div class="iconDiv">
         <a class="tooltip"><i class="fas fa-comment" id="feedback"></i><span class="tooltipText"
-                style="width: 100px;">피드백 남기기</span></a>
+                id="leaveFeedback" style="width: 100px;">피드백 남기기</span></a>
         &nbsp;
         <a class="tooltip"><i class="fas fa-envelope" id="mailIcon"></i><span class="tooltipText"
-                style="width: 100px;">메일 주소 복사</span></a>
+                id="copyEmail" style="width: 100px;">메일 주소 복사</span></a>
         &nbsp;
         <a class="tooltip"><i class="fab fa-github" id="githubIcon"></i><span class="tooltipText"
                 style="width: 60px;">Github</span></a>
