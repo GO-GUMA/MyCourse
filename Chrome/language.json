@@ -1,7 +1,7 @@
 {
     "ko": {
         "title" : "미수강 강좌",
-        "cb_text": "지난 강좌 숨기기",
+        "cb_text": " 지난 강좌 숨기기",
         "noMissedVideo": "미수강 영상이 없습니다",
         "noVideo": "동영상이 없는 강의 입니다",
         "noMissedAndPast": "지난 영상 & 미수강 영상이 없습니다",
@@ -22,7 +22,7 @@
     },
     "en" : {
         "title" : "Missed videos",
-        "cb_text": "Hide expired videos",
+        "cb_text": " Hide expired videos",
         "noMissedVideo": "There are no missed videos",
         "noVideo": "This lecture has no video",
         "noMissedAndPast": "There are no expired videos and missed videos",
