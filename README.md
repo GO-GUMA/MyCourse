@@ -1,17 +1,18 @@
 # MyCourse
-![Generic badge](https://img.shields.io/badge/Version-1.0.1-green.svg)
-![Generic badge](https://img.shields.io/badge/Publishing-1.0.1-green.svg)
-![Generic badge](https://img.shields.io/badge/Last_Update-2022Jan28-green.svg)
-![Generic badge](https://img.shields.io/badge/Pending-1.1.0_language-red.svg)  
+![Generic badge](https://img.shields.io/badge/Version-1.1.0-green.svg)
+![Generic badge](https://img.shields.io/badge/Publishing-1.1.0-green.svg)
+![Generic badge](https://img.shields.io/badge/Last_Update-2022Jan31-green.svg)  
 Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램   
 플랫폼에서 간편하게 미수강 강좌와 남은 시간을 알 수 있습니다.  
-<img src="Images/mainGUI_v1.0.1.png" width="300"/>   
+<img src="Images/MainGUI_v1.1.0.ko.png" width="300"/>
+<img src="Images/MainGUI_v1.1.0.en.png" width="300"/>   
 
 ## 기능
 - 강좌의 홈 화면에서 미수강 영상 모아보기
 - 영상 재생 완료시 자동 창 닫기
 - 영상 재생창의 타이틀에 재생 상태 표시
 - 다중 영상 재생
+- 다국어 지원 (한국어/영어)
 
 <br>
 
