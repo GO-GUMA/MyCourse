@@ -1,7 +1,7 @@
 {
     "name": "MyCourse",
     "description": "Coursemos 기반 E-Learning 플랫폼에서 간편하게 미수강/지각 영상 확인, 다중 영상 재생 등의 다양한 기능을 제공합니다.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "manifest_version": 3,
     "permissions": [
         "storage"
