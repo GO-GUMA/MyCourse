@@ -182,6 +182,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
     boardDiv.appendChild(noVideoAlert);
 
     var currneTime = new Date();
+    var pastCnt = 0 // for counting missedVideo and it is past
 
     if (missedCnt == 0 && prograssArr.length != 0) {
         noVideoAlert.innerHTML = languageJSON['noMissedAndPast']; //'지난 영상 & 미수강 영상이 없습니다';
@@ -212,8 +213,9 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
                 videoDiv.setAttribute('id', 'duePassed');
             }
 
-            if (isHidePast) { // Storage 'Hide past videos'
+            if (isHidePast && dueLeft < 0) { // Storage 'Hide past videos' is true AND due passed
                 videoDiv.setAttribute('hidden', 'true');
+                pastCnt += 1
             }
 
             videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
@@ -222,7 +224,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
             boardDiv.appendChild(videoDiv); // append on parent DIV
         }
 
-        if (!isHidePast) {
+        if (!isHidePast || pastCnt != missdVideo) {
             boardDiv.innerHTML += '<div style="height: 10px;" id="placerOne"></div>';
         } else {
             noVideoAlert.hidden = false;
