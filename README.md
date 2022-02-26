@@ -1,7 +1,7 @@
 # MyCourse
 ![Generic badge](https://img.shields.io/badge/Version-1.1.1-green.svg)
 ![Generic badge](https://img.shields.io/badge/Publishing-1.1.1-green.svg)
-![Generic badge](https://img.shields.io/badge/Last_Update-2022Feb24-green.svg)  
+![Generic badge](https://img.shields.io/badge/Last_Update-2022Feb26-green.svg)  
 Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램   
 플랫폼에서 간편하게 미수강 강좌와 남은 시간을 알 수 있습니다.  
 <img src="Images/MainGUI_v1.1.0.ko.png" width="300"/>
@@ -48,7 +48,7 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 <br>
 
 ## 주의사항
-본 프로그램을 사용함으로써 발생하는 피해에 대해서는 책입져드리지 못합니다.  
+본 프로그램을 사용함으로써 발생하는 피해에 대해서는 책임져드릴 수 없습니다.  
 본 프로그램을 맹신하지 마시고 프로그램 사용 후 수강이 되었는지 확인해 주시기 바랍니다.  
 적용 가능한 대학의 목록은 [여기][Univ]에서 확인 하실 수 있습니다.  
 
@@ -60,7 +60,7 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 > * e-Mail : gangsu1813@naver.com
 
 > ## 개발 언어
-> <img height="30" src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/>
+> <img height="30" src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/> <img height="30" src="https://img.shields.io/badge/jQuery-0769AD?style=flat-square&logo=jQuery&logoColor=white"/>
 
 > ## License
 > GNU General Public License v3.0 
