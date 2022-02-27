@@ -2,6 +2,7 @@ const activeUrl = window.location.href; // Get Current URL
 const prograssURL = "https://smartlead.hallym.ac.kr/report/ubcompletion/user_progress.php?id=" + getClassID(activeUrl); // function getClassID() return classID
 var prograssArr = [], missdVideo = []; // prograssArr = ['DONE','LATE','NONE']
 var isHidePast = false; // boolean => is user check hide past
+var sectionCnt = 0; // int => section title count
 
 var languageJSON; // JSON Object => language sets for current LMS language
 
@@ -98,8 +99,6 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
 }
 
 function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) => show missedVideo board
-    var missedCnt = mVideo.length; //Temp
-
     var parentNode = document.querySelector('div[class="course-content"]');
     var pushNode = parentNode.querySelector('div[class="total_sections"]');
 
@@ -145,7 +144,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
                 passed[i].hidden = true;
             }
 
-            if (missdVideo.length == passed.length) {
+            if ((missdVideo.length + sectionCnt) == passed.length) {
                 noVideoAlertDOM.hidden = false;
                 PlacerOne.hidden = true;
             }
@@ -159,7 +158,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
                 passed[i].hidden = false;
             }
 
-            if (missdVideo.length == passed.length) {
+            if ((missdVideo.length + sectionCnt) == passed.length) {
                 noVideoAlertDOM.hidden = true;
                 PlacerOne.hidden = false;
             }
@@ -184,11 +183,15 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
     var currneTime = new Date();
     var pastCnt = 0 // for counting missedVideo and it is past
 
+    var missedCnt = mVideo.length; // Whole video missed Video Count
+
     if (missedCnt == 0 && prograssArr.length != 0) {
         noVideoAlert.innerHTML = languageJSON['noMissedAndPast']; //'지난 영상 & 미수강 영상이 없습니다';
         noVideoAlert.hidden = false;
         cb_div.hidden = true;
     } else {
+        var sectionStatus = null; // Current section status
+        sectionCnt = 0 // Init section count
         for (i = 0; i < missedCnt; i++) {
             var videoDiv = document.createElement('Div');
             videoDiv.setAttribute('style', 'height: auto; padding-left: 10px; padding-top: 5px; margin-top: 5px;')
@@ -207,8 +210,6 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
             var dueCheck = new Date(dueYear, dueMonth - 1, dueDate, dueHour, dueMin, dueSec);
             var dueLeft = dueCheck - currneTime; // Milliseconds
 
-            // console.log(millToTime(dueLeft));
-
             if (dueLeft < 0) {
                 videoDiv.setAttribute('id', 'duePassed');
             }
@@ -219,16 +220,40 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
             }
 
             videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
-            videoDiv.innerHTML += '<span style="color:#31708f; font-size: 12px;">&nbsp;' + mVideo[i][4] + '</span>'
+            videoDiv.innerHTML += '<span style="color:#31708f; font-size: 12px;">&nbsp;' + mVideo[i][4] + '</span>' // Video running time
+
+            // Working 2022Feb26
+            var sectionDiv = document.createElement('Div');
+            sectionDiv.style = 'margin-left: 50px; margin-top: 20px;'
+            sectionDiv.innerHTML = '<a style="cursor: pointer; font-size: 16px;" href="#' + mVideo[i][2] + '">' + mVideo[i][2].split('-')[1] + '주차<a>';
+
+            if (dueLeft < 0) {
+                sectionDiv.setAttribute('id', 'duePassed');
+                if (isHidePast) {
+                    sectionDiv.setAttribute('hidden', 'true');
+                }
+            }
+
+            if (sectionStatus == null) {
+                boardDiv.appendChild(sectionDiv)
+                sectionStatus = mVideo[i][2];
+                sectionCnt += 1
+            } else {
+                if (sectionStatus != mVideo[i][2]) {
+                    boardDiv.appendChild(sectionDiv)
+                    sectionCnt += 1
+                    // console.log(mVideo[i][2]);
+                }
+            }
 
             boardDiv.appendChild(videoDiv); // append on parent DIV
         }
 
-        if (!isHidePast || pastCnt != missdVideo) {
-            boardDiv.innerHTML += '<div style="height: 10px;" id="placerOne"></div>';
+        if(isHidePast && pastCnt == missdVideo.length) {
+            noVideoAlert.hidden = false; // Show noVideoAlert DIV
+            boardDiv.innerHTML += '<div style="height: 20px;" id="placerOne" hidden></div>';
         } else {
-            noVideoAlert.hidden = false;
-            boardDiv.innerHTML += '<div style="height: 10px;" id="placerOne" hidden></div>';
+            boardDiv.innerHTML += '<div style="height: 20px;" id="placerOne"></div>';
         }
     }
 
