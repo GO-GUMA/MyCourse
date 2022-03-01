@@ -355,7 +355,7 @@ function findIndex(array, searchTitle) { // function findIndex(Array array, Stri
 function delMulti2D(array) {
     var tempArr = [];
     for (i = 0; i < array.length; i++) {
-        var joined = array[i].join();
+        var joined = array[i].join('%*%');
         if (tempArr.indexOf(joined) == -1) {
             tempArr.push(joined);
         }
@@ -363,7 +363,7 @@ function delMulti2D(array) {
 
     var lastArr = [];
     for (i = 0; i < tempArr.length; i++) {
-        lastArr.push(tempArr[i].split(','));
+        lastArr.push(tempArr[i].split('%*%'));
     }
 
     return lastArr;
