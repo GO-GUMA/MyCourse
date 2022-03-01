@@ -1,6 +1,6 @@
 # MyCourse
-![Generic badge](https://img.shields.io/badge/Version-1.1.3-green.svg)
-![Generic badge](https://img.shields.io/badge/Publishing-1.1.3-green.svg)
+![Generic badge](https://img.shields.io/badge/Version-1.1.4-green.svg)
+![Generic badge](https://img.shields.io/badge/Publishing-1.1.4-green.svg)
 ![Generic badge](https://img.shields.io/badge/Last_Update-2022Mar01-green.svg)  
 Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램   
 플랫폼에서 간편하게 미수강 강좌와 남은 시간을 알 수 있습니다.  
@@ -51,6 +51,9 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 * v1.1.3 (2022.03.01)
   * '미수강 강좌'보드에 강좌들이 중복되어 표시되던 문제 해결
   * 강좌의 수강 목록에서 수강 현황이 올바르게 표시되지 않던 문제 해결
+
+* v1.1.4 (2022.03.01)
+  * 영상 제목에 ','가 존재하는 경우 발생하던 문제 해결
 
 <br>
 
