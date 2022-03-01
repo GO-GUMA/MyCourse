@@ -54,11 +54,12 @@ function parseHtml(html) { // function parseHtml(html text) => check video statu
         for (var i = 0; i < cr_tr.length; i++) {
             var videoCheck = !!cr_tr[i].querySelector('[class="text-center hidden-xs hidden-sm"]'); // if [class="text-center hidden-xs hidden-sm"] exist return true else false
             if (videoCheck) {
+                var videoTtile = (cr_tr[i].querySelector('td[class="text-left"]').innerHTML).split('alt=""> ')[1];
                 var videoTime = cr_tr[i].querySelector('[class="text-center hidden-xs hidden-sm"]').innerHTML; // Video running time(String)
                 var prograssTimeInner = cr_tr[i].querySelector('[class="text-center"]').innerHTML; // User run time(String)
                 var prograssTime = prograssTimeInner.split('<br>')[0]; // Seperate time and button
 
-                prograssArr.push(checkPrograss(videoTime, prograssTime)); // function checkPrograss(VideoRunningTime, UserRunTime) return ['DONE' or 'LATE' or 'NONE'] and push to prograssArr
+                prograssArr.push([videoTtile,checkPrograss(videoTime, prograssTime)]); // function checkPrograss(VideoRunningTime, UserRunTime) return ['DONE' or 'LATE' or 'NONE'] and push to prograssArr
             }
         }
     }
@@ -75,19 +76,22 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
         var appendColor; // (String) => Color of status circle
 
         // console.log(cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML); // Working
-
+        var videoTtile = cr_span_InnerHtml.split('<span')[0];
         var sectionID = cr_li[i].parentNode.parentNode.parentNode.id; // Week ID
         var dueDate = cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML; // Due date String
         var playTime = cr_li[i].querySelector('span[class="text-info"]').innerHTML.split(' ')[1];
 
-        if (progArr[i] == 'DONE') {
+        const status = progArr[findIndex(progArr,videoTtile)][1];
+        console.log(status);
+
+        if (status == 'DONE') {
             appendColor = '#2a7bcd'; // Set color to blue
-        } else if (progArr[i] == 'NONE') {
+        } else if (status == 'NONE') {
             appendColor = '#dc5648'; // Set color to Red
-            missdVideo.push([cr_span_InnerHtml.split('<span')[0], 'background-color:#dc5648;', sectionID, dueDate, playTime]);
+            missdVideo.push([videoTtile, 'background-color:#dc5648;', sectionID, dueDate, playTime]);
         } else {
             appendColor = '#949997'; // Set color to Gray 
-            missdVideo.push([cr_span_InnerHtml.split('<span')[0], 'background-color:#949997;', sectionID, dueDate, playTime]);
+            missdVideo.push([videoTtile, 'background-color:#949997;', sectionID, dueDate, playTime]);
         }
 
         var appendStr = '<div style="width:13px; height:13px; background-color:' + appendColor + '; border-radius: 50%;"></div>'; // Set Color
@@ -95,7 +99,7 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
 
         // cr_li[i].querySelector('img[class="activityicon"]').src = chrome.runtime.getURL('images/done.png'); // Test Change Image
     }
-    displayBoard(missdVideo);
+    displayBoard(delMulti2D(missdVideo));
 }
 
 function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) => show missedVideo board
@@ -337,4 +341,30 @@ function millToTime(clacTime) { // function millToTime(int milliseconds) return 
     var result = date + languageJSON['days'] + ' ' + hour + languageJSON['hours'] + ' ' + min + languageJSON['minutes'] + ' ' + sec + languageJSON['seconds'] + ' ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
     // var result = date + '일 ' + hour + '시간 ' + min + '분 ' + sec + '초 ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
     return result; // End
+}
+
+function findIndex(array, searchTitle) { // function findIndex(Array array, String searchTitle)
+    for (i = 0; i < array.length; i++) {
+        if (String(array[i][0]) === String(searchTitle)) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function delMulti2D(array) {
+    var tempArr = [];
+    for (i = 0; i < array.length; i++) {
+        var joined = array[i].join();
+        if (tempArr.indexOf(joined) == -1) {
+            tempArr.push(joined);
+        }
+    }
+
+    var lastArr = [];
+    for (i = 0; i < tempArr.length; i++) {
+        lastArr.push(tempArr[i].split(','));
+    }
+
+    return lastArr;
 }
