@@ -59,7 +59,7 @@ function parseHtml(html) { // function parseHtml(html text) => check video statu
                 var prograssTimeInner = cr_tr[i].querySelector('[class="text-center"]').innerHTML; // User run time(String)
                 var prograssTime = prograssTimeInner.split('<br>')[0]; // Seperate time and button
 
-                prograssArr.push([videoTtile,checkPrograss(videoTime, prograssTime)]); // function checkPrograss(VideoRunningTime, UserRunTime) return ['DONE' or 'LATE' or 'NONE'] and push to prograssArr
+                prograssArr.push([videoTtile, checkPrograss(videoTime, prograssTime)]); // function checkPrograss(VideoRunningTime, UserRunTime) return ['DONE' or 'LATE' or 'NONE'] and push to prograssArr
             }
         }
     }
@@ -71,38 +71,42 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
     // Search every videos
     var cr_li = document.querySelectorAll('li[class="activity vod modtype_vod "]'); // Find all li tag that has class="activity vod modtype_vod" to cr_li[]
 
-    for (var i = 0; i < cr_li.length; i++) {
-        var cr_span_InnerHtml = cr_li[i].querySelector('span[class="instancename"]').innerHTML; // Base html at view.php 'Course name, Due, ETC..'
-        var appendColor; // (String) => Color of status circle
+    if (cr_li.length != 0 && progArr.length == 0) {
+        displayBoard([],true)
+    } else {
+        for (var i = 0; i < cr_li.length; i++) {
+            var cr_span_InnerHtml = cr_li[i].querySelector('span[class="instancename"]').innerHTML; // Base html at view.php 'Course name, Due, ETC..'
+            var appendColor; // (String) => Color of status circle
 
-        // console.log(cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML); // Working
-        var videoTtile = cr_span_InnerHtml.split('<span')[0];
-        var sectionID = cr_li[i].parentNode.parentNode.parentNode.id; // Week ID
-        var dueDate = cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML; // Due date String
-        var playTime = cr_li[i].querySelector('span[class="text-info"]').innerHTML.split(' ')[1];
+            // console.log(cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML); // Working
+            var videoTtile = cr_span_InnerHtml.split('<span')[0];
+            var sectionID = cr_li[i].parentNode.parentNode.parentNode.id; // Week ID
+            var dueDate = cr_li[i].querySelector('span[class="text-ubstrap"]').innerHTML; // Due date String
+            var playTime = cr_li[i].querySelector('span[class="text-info"]').innerHTML.split(' ')[1];
 
-        const status = progArr[findIndex(progArr,videoTtile)][1];
-        console.log(status);
+            const status = progArr[findIndex(progArr, videoTtile)][1];
+            console.log(status);
 
-        if (status == 'DONE') {
-            appendColor = '#2a7bcd'; // Set color to blue
-        } else if (status == 'NONE') {
-            appendColor = '#dc5648'; // Set color to Red
-            missdVideo.push([videoTtile, 'background-color:#dc5648;', sectionID, dueDate, playTime]);
-        } else {
-            appendColor = '#949997'; // Set color to Gray 
-            missdVideo.push([videoTtile, 'background-color:#949997;', sectionID, dueDate, playTime]);
+            if (status == 'DONE') {
+                appendColor = '#2a7bcd'; // Set color to blue
+            } else if (status == 'NONE') {
+                appendColor = '#dc5648'; // Set color to Red
+                missdVideo.push([videoTtile, 'background-color:#dc5648;', sectionID, dueDate, playTime]);
+            } else {
+                appendColor = '#949997'; // Set color to Gray 
+                missdVideo.push([videoTtile, 'background-color:#949997;', sectionID, dueDate, playTime]);
+            }
+
+            var appendStr = '<div style="width:13px; height:13px; background-color:' + appendColor + '; border-radius: 50%;"></div>'; // Set Color
+            cr_li[i].querySelector('span[class="instancename"]').innerHTML = appendStr + ' ' + cr_span_InnerHtml; // append to base Html at view.php
+
+            // cr_li[i].querySelector('img[class="activityicon"]').src = chrome.runtime.getURL('images/done.png'); // Test Change Image
         }
-
-        var appendStr = '<div style="width:13px; height:13px; background-color:' + appendColor + '; border-radius: 50%;"></div>'; // Set Color
-        cr_li[i].querySelector('span[class="instancename"]').innerHTML = appendStr + ' ' + cr_span_InnerHtml; // append to base Html at view.php
-
-        // cr_li[i].querySelector('img[class="activityicon"]').src = chrome.runtime.getURL('images/done.png'); // Test Change Image
+        displayBoard(delMulti2D(missdVideo));
     }
-    displayBoard(delMulti2D(missdVideo));
 }
 
-function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) => show missedVideo board
+function displayBoard(mVideo, errorStat = false) { // function displayBoard(array missdVideo[][]) => show missedVideo board
     var parentNode = document.querySelector('div[class="course-content"]');
     var pushNode = parentNode.querySelector('div[class="total_sections"]');
 
@@ -182,6 +186,10 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
         cb_div.hidden = true;
     }
 
+    if (errorStat) {
+        noVideoAlert.innerHTML = languageJSON['noVideoCheck']; // '학습 진도가 집계되는 동영상이 없는 강의 입니다.';
+    }
+
     boardDiv.appendChild(noVideoAlert);
 
     var currneTime = new Date();
@@ -253,7 +261,7 @@ function displayBoard(mVideo) { // function displayBoard(array missdVideo[][]) =
             boardDiv.appendChild(videoDiv); // append on parent DIV
         }
 
-        if(isHidePast && pastCnt == missdVideo.length) {
+        if (isHidePast && pastCnt == missdVideo.length) {
             noVideoAlert.hidden = false; // Show noVideoAlert DIV
             boardDiv.innerHTML += '<div style="height: 20px;" id="placerOne" hidden></div>';
         } else {
