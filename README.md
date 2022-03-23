@@ -25,6 +25,7 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 
 ## 다운로드
 - 크롬 웹 스토어 : [MyCourse][MyCourse_Chrome]
+- 네이버 웨일 스토어 : [MyCourse Whale][MyCourse_Whale]
 
 <br>
 
@@ -81,6 +82,7 @@ Coursemos 기반 E-Learning 플랫폼 전용 크롬 확장 프로그램
 [GangsuKim]: https://github.com/GangsuKim
 [MyCourseFeedback]: http://go-guma.com/bbs/board.php?bo_table=MyCourse
 [MyCourse_Chrome]: https://chrome.google.com/webstore/detail/mycourse/hccakmcanlejgbahgglencckckkbhohn?hl=ko
+[MyCourse_Whale]: https://store.whale.naver.com/detail/kbgmjdnhpjkndmijdaaefmfbegjbpafe
 [Univ]: Univ.md
 
 <!-- ![Generic badge](https://img.shields.io/badge/Pending-v1.1.5-orange.svg)   -->
