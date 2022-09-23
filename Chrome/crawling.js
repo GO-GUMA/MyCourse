@@ -1,3 +1,4 @@
+// Init
 const activeUrl = window.location.href; // Get Current URL
 const prograssURL = "https://smartlead.hallym.ac.kr/report/ubcompletion/user_progress.php?id=" + getClassID(activeUrl); // function getClassID() return classID
 var prograssArr = [], missdVideo = []; // prograssArr = ['DONE','LATE','NONE']
@@ -9,12 +10,12 @@ var languageJSON; // JSON Object => language sets for current LMS language
 fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language json data from 'language.json'
     return response.json();
 }).then(jsondata => {
-    console.log('JSON LOADED ' + document.documentElement.lang); // JSON LOADED 'ko' or 'en' or 'ja' or 'zh-cn'
+    // console.log('JSON LOADED ' + document.documentElement.lang); // JSON LOADED 'ko' or 'en' or 'ja' or 'zh-cn'
     languageJSON = jsondata[document.documentElement.lang]; // Set languageJSON Object to current LMS json 
 });
 
 chrome.storage.sync.get('hidePastCheck', function (result) {
-    console.log('Value currently is ' + result.hidePastCheck);
+    // console.log('Value currently is ' + result.hidePastCheck);
     isHidePast = result.hidePastCheck;
 });
 
@@ -24,6 +25,19 @@ httpRequest = new XMLHttpRequest(); // HTTPRequest
 httpRequest.onreadystatechange = getContents; // HTTPRequest - function getContents()
 httpRequest.open('GET', prograssURL);  // open Request session
 httpRequest.send(); // Request Data
+
+setInterval(()=> {
+    const timers = Array.from(document.querySelectorAll('.time-left'));
+    var currneTime = new Date();
+
+    timers.forEach((timer) => {
+        var dueDate = new Date(timer.dataset.time);
+        timer.innerHTML = ' ' + millToTime(dueDate - currneTime);
+    })
+},1000);
+
+
+
 
 function getClassID(url) { // return classID
     var id = url.split('?id='); // Split URL by '?id='
@@ -85,7 +99,7 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
             var playTime = cr_li[i].querySelector('span[class="text-info"]').innerHTML.split(' ')[1];
 
             const status = progArr[findIndex(progArr, videoTtile)][1];
-            console.log(status);
+            // console.log(status);
 
             if (status == 'DONE') {
                 appendColor = '#2a7bcd'; // Set color to blue
@@ -181,6 +195,7 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
     noVideoAlert.setAttribute('hidden', true);
     noVideoAlert.innerHTML = languageJSON['noMissedVideo']; // '미수강 영상이 없습니다';
 
+
     if (prograssArr.length == 0) {
         noVideoAlert.innerHTML = languageJSON['noVideo']; // '동영상이 없는 강의 입니다';
         cb_div.hidden = true;
@@ -196,6 +211,8 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
     var pastCnt = 0 // for counting missedVideo and it is past
 
     var missedCnt = mVideo.length; // Whole video missed Video Count
+
+    console.log(prograssArr.length)
 
     if (missedCnt == 0 && prograssArr.length != 0) {
         noVideoAlert.innerHTML = languageJSON['noMissedAndPast']; //'지난 영상 & 미수강 영상이 없습니다';
@@ -231,8 +248,20 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
                 pastCnt += 1
             }
 
-            videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
+            videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;" class="time-left" data-time="' + dueCheck + '"> ' + millToTime(dueLeft) + ' </span>' // Due date
+            // videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;" class="time-left"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
             videoDiv.innerHTML += '<span style="color:#31708f; font-size: 12px;">&nbsp;' + mVideo[i][4] + '</span>' // Video running time
+            
+            // live timer
+            // let time_left = videoDiv.querySelector(".time-left#timer-" + i);
+            // if(time_left != null) {
+            //     // setInterval(() => {
+            //     //     time_left = videoDiv.querySelector(".time-left#timer-" + i);
+            //     //     console.log()
+            //     //     var dueCheck = new Date(dueYear, dueMonth - 1, dueDate, dueHour, dueMin, dueSec);
+            //     //     time_left.innerHTML = millToTime(dueCheck - (new Date()));
+            //     // }, 1000)
+            // }
 
             // Working 2022Feb26
             var sectionDiv = document.createElement('Div');
@@ -310,20 +339,21 @@ function checkPrograss(vTime, pTime) { // function checkPrograss(VideoRunningTim
 }
 
 function getContents() { // function getContents() => check readyStatus and run parseHtml()
-    console.log('readyState : ' + httpRequest.readyState);
-    console.log('status : ' + httpRequest.status);
+    // console.log('readyState : ' + httpRequest.readyState);
+    // console.log('status : ' + httpRequest.status);
 
     if (httpRequest.readyState === 4) {
         if (httpRequest.status === 200) {
-            console.log('SUCCESS');
+            // console.log('SUCCESS');
             parseHtml(httpRequest.responseText);
         } else {
-            console.log('FAIL');
+            // console.log('FAIL');
         }
     }
 }
 
 function millToTime(clacTime) { // function millToTime(int milliseconds) return 'DD일 HH시 MM분 SS초 남음 or 지남'
+    // console.log(clacTime)
     var leftOrPast = languageJSON['timeLeft']; // '남음'; // leftOrPast for result String
 
     if (clacTime < 0) { // if clacTime is lower that o = Video Expired
@@ -341,10 +371,10 @@ function millToTime(clacTime) { // function millToTime(int milliseconds) return 
     var dueSecLeft = clacTime; // Get Seconds
 
     // Switch to Int
-    var date = parseInt(dueDateLeft);
-    var hour = parseInt(dueHourLeft);
-    var min = parseInt(dueMinLeft);
-    var sec = parseInt(dueSecLeft);
+    var date = ('00' + parseInt(dueDateLeft)).slice(-2);
+    var hour = ('00' + parseInt(dueHourLeft)).slice(-2);
+    var min = ('00' + parseInt(dueMinLeft)).slice(-2);
+    var sec = ('00' + parseInt(dueSecLeft)).slice(-2);
 
     var result = date + languageJSON['days'] + ' ' + hour + languageJSON['hours'] + ' ' + min + languageJSON['minutes'] + ' ' + sec + languageJSON['seconds'] + ' ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
     // var result = date + '일 ' + hour + '시간 ' + min + '분 ' + sec + '초 ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
