@@ -127,3 +127,95 @@ function setLanguage() { //language
     document.getElementById('copyEmail').innerHTML = languageJSON['pu_copyMail']; // copy e-mail
     document.getElementById('language').innerHTML = languageJSON['pu_languageButton']; // ko
 }
+
+async function checkCourseList() {
+    const courseListUrl = "https://smartlead.hallym.ac.kr/local/ubion/user";
+    let courseIdList;
+
+    await fetch(courseListUrl)
+    .then((response) => {return response.text()})
+    .then((html) => {
+        courseIdList = parseHtml_pu(html);
+    })
+
+    return courseIdList
+}
+
+function parseHtml_pu(html) { // function parseHtml(html text) => check video status
+    var cr = getElement(html) // function getElement('html text') return 'html document'
+    let courseIdList = [];
+
+    const my_course_lists = cr.querySelector('tbody.my-course-lists');
+    const courseList = my_course_lists.querySelectorAll('a.coursefullname');
+    courseList.forEach((course) => {
+        courseIdList.push((course.href).split('?id=')[1]);
+    })
+
+    return courseIdList
+}
+
+function getElement(html) { // Html text to 'html document'
+    var div = document.createElement('div');
+    div.innerHTML = html;
+    return div;
+}
+
+async function fetchParser(url) {
+    await fetch(url)
+    .then((response) => {return response.text()})
+    .then((html) => {
+        return getElement(html);
+    })
+}
+
+async function crawlInit() {
+    const courseIdList = await checkCourseList(); // get course id's
+    const tasks = await getTaskList(courseIdList);
+
+    // const unSubmitted = tasks.filter((task) => (task.status == false && task.missed == false));
+    console.log(tasks);
+}
+
+async function getTaskList(courseIdList) {
+    const taskUrlFormer = "https://smartlead.hallym.ac.kr/mod/assign/index.php?id=";
+    let tasks = [];
+
+    for await (const course_id of courseIdList) {
+        let courseTaskUrl = taskUrlFormer + course_id;
+        let document_res;
+
+        await fetch(courseTaskUrl)
+        .then((response) => {return response.text()})
+        .then((html) => {
+            document_res = getElement(html);
+        })
+        
+        const course_name = (document_res.querySelector('div.coursename > h1 > a').innerHTML).split("[")[0];
+        const tbody_list = document_res.querySelector('table.generaltable > tbody');
+        if(tbody_list ?? false) {
+            course_list = tbody_list.querySelectorAll('tr:nth-child(odd)');
+
+            course_list.forEach((course) => {
+                const task_name = course.querySelector('a').innerHTML; // String - Task name
+                const task_id = (course.querySelector('a').href).split('?id=')[1];
+                const task_status = (course.querySelector('td.cell.c3').innerHTML == "미제출") ? false : true; // Boolean - Task status
+                const task_due = course.querySelector('td.cell.c2').innerHTML; // Boolean - Task status
+                let task = new Object();
+
+                task.course = course_name;
+                task.name = task_name;
+                task.status = task_status;
+                task.due = task_due; 
+                task.id = task_id; 
+                task.course_id = course_id;
+                task.missed = ((new Date(task_due) - new Date()) < 0) ? true : false;
+
+                tasks.push(task);
+            })
+        }
+    }
+
+    return tasks
+}
+
+crawlInit();

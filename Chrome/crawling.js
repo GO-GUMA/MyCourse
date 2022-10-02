@@ -9,12 +9,12 @@ var languageJSON; // JSON Object => language sets for current LMS language
 fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language json data from 'language.json'
     return response.json();
 }).then(jsondata => {
-    console.log('JSON LOADED ' + document.documentElement.lang); // JSON LOADED 'ko' or 'en' or 'ja' or 'zh-cn'
+    // console.log('JSON LOADED ' + document.documentElement.lang); // JSON LOADED 'ko' or 'en' or 'ja' or 'zh-cn'
     languageJSON = jsondata[document.documentElement.lang]; // Set languageJSON Object to current LMS json 
 });
 
 chrome.storage.sync.get('hidePastCheck', function (result) {
-    console.log('Value currently is ' + result.hidePastCheck);
+    // console.log('Value currently is ' + result.hidePastCheck);
     isHidePast = result.hidePastCheck;
 });
 
@@ -85,7 +85,7 @@ function showOnPage(progArr) { // function showOnPage(User video status) => Show
             var playTime = cr_li[i].querySelector('span[class="text-info"]').innerHTML.split(' ')[1];
 
             const status = progArr[findIndex(progArr, videoTtile)][1];
-            console.log(status);
+            // console.log(status);
 
             if (status == 'DONE') {
                 appendColor = '#2a7bcd'; // Set color to blue
@@ -310,15 +310,15 @@ function checkPrograss(vTime, pTime) { // function checkPrograss(VideoRunningTim
 }
 
 function getContents() { // function getContents() => check readyStatus and run parseHtml()
-    console.log('readyState : ' + httpRequest.readyState);
-    console.log('status : ' + httpRequest.status);
+    // console.log('readyState : ' + httpRequest.readyState);
+    // console.log('status : ' + httpRequest.status);
 
     if (httpRequest.readyState === 4) {
         if (httpRequest.status === 200) {
-            console.log('SUCCESS');
+            // console.log('SUCCESS');
             parseHtml(httpRequest.responseText);
         } else {
-            console.log('FAIL');
+            // console.log('FAIL');
         }
     }
 }
