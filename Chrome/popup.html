@@ -10,14 +10,43 @@
 
 <body>
     <div class="topDiv">
-        <div style="height: 3px"></div>
-        <a>&nbsp;&nbsp;&nbsp; MyCourse</a>
-        <img src="/images/icon.png" height="25px" style="position: absolute; top: 6px; left: 64px;">
+        <!-- <div style="height: 2px"></div> -->
+        <img src="/images/icon.png" height="35px">
+        <a>MyCourse</a>
     </div>
+
     <div style="height: 12px"></div>
-    <a class="indicateSetting" id="indicateSetting">설정</a>
+    <a class="indicateSetting" id="myTask">나의 과제</a>
+    <!-- <a class="indicateSetting" id="indicateSetting">나의 과제</a> -->
     <div class="settingLine"></div>
-    <div class="settingDiv">
+
+    <div class="tasks">
+        <div class="task skeleton-div">
+            <a class="skeleton skeleton-text"></a>
+            <a class="task-due skeleton skeleton-text"></a>
+            <br>
+            <a class="task-name skeleton skeleton-text"></a>
+        </div>
+
+        <div class="task skeleton-div">
+            <a class="skeleton skeleton-text"></a>
+            <a class="task-due skeleton skeleton-text"></a>
+            <br>
+            <a class="task-name skeleton skeleton-text"></a>
+        </div>
+
+        <div class="task skeleton-div">
+            <a class="skeleton skeleton-text"></a>
+            <a class="task-due skeleton skeleton-text"></a>
+            <br>
+            <a class="task-name skeleton skeleton-text"></a>
+        </div>
+
+        <div class="alert" id="url-alert" hidden>LMS의 강좌에 접속을 해 주세요</div>
+        <div class="alert" id="login-alert" hidden>LMS 로그인을 해 주세요</div>
+    </div>
+
+    <!-- <div class="settingDiv">
         <div>
             <a class="tooltip"><span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;"
                     id="hidePast_info">기한이 지난 영상을 자동으로 숨깁니다</span><span id="hidePast_text">지난 영상 숨기기</span></a>
@@ -31,14 +60,14 @@
             <input type="checkbox" name="closeVideoAuto" id="closeVideoAuto">
             <label for="closeVideoAuto" style="position: absolute; top: 112px; right: 25px"></label>
         </div>
-    </div>
+    </div> -->
 
     <div class="iconDiv">
-        <a class="tooltip"><i class="fas fa-comment" id="feedback"></i><span class="tooltipText"
-                id="leaveFeedback" style="width: 100px;">피드백 남기기</span></a>
+        <a class="tooltip"><i class="fas fa-comment" id="feedback"></i><span class="tooltipText" id="leaveFeedback"
+                style="width: 100px;">피드백 남기기</span></a>
         &nbsp;
-        <a class="tooltip"><i class="fas fa-envelope" id="mailIcon"></i><span class="tooltipText"
-                id="copyEmail" style="width: 100px;">메일 주소 복사</span></a>
+        <a class="tooltip"><i class="fas fa-envelope" id="mailIcon"></i><span class="tooltipText" id="copyEmail"
+                style="width: 100px;">메일 주소 복사</span></a>
         &nbsp;
         <a class="tooltip"><i class="fab fa-github" id="githubIcon"></i><span class="tooltipText"
                 style="width: 60px;">Github</span></a>

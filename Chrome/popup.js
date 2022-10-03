@@ -1,37 +1,37 @@
 var languageJSON; // JSON Object => language sets for current LMS language
+let LMSBaseUrl;
+// // Checking Storage to get check status
+// chrome.storage.sync.get('hidePastCheck', function (result) {
+//     if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
+//         var cb_pastCheck = document.getElementById('hidePastSetting');
+//         cb_pastCheck.checked = true;
 
-// Checking Storage to get check status
-chrome.storage.sync.get('hidePastCheck', function (result) {
-    if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
-        var cb_pastCheck = document.getElementById('hidePastSetting');
-        cb_pastCheck.checked = true;
+//         chrome.storage.sync.set({ hidePastCheck: true }, function () {
+//             console.log('[Init setting] Past video check box data update to ' + true);
+//         });
+//     }
 
-        chrome.storage.sync.set({ hidePastCheck: true }, function () {
-            console.log('[Init setting] Past video check box data update to ' + true);
-        });
-    }
+//     if (result.hidePastCheck) {
+//         var cb_pastCheck = document.getElementById('hidePastSetting');
+//         cb_pastCheck.checked = true;
+//     }
+// });
 
-    if (result.hidePastCheck) {
-        var cb_pastCheck = document.getElementById('hidePastSetting');
-        cb_pastCheck.checked = true;
-    }
-});
+// chrome.storage.sync.get('closeVideoAuto', function (result) {
+//     if (typeof result.closeVideoAuto === "undefined") { // if Extension is running first time
+//         var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+//         cb_closeVideoAuto.checked = true;
 
-chrome.storage.sync.get('closeVideoAuto', function (result) {
-    if (typeof result.closeVideoAuto === "undefined") { // if Extension is running first time
-        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-        cb_closeVideoAuto.checked = true;
+//         chrome.storage.sync.set({ closeVideoAuto: true }, function () {
+//             console.log('[Init setting] Close video auto check box data update to ' + true);
+//         });
+//     }
 
-        chrome.storage.sync.set({ closeVideoAuto: true }, function () {
-            console.log('[Init setting] Close video auto check box data update to ' + true);
-        });
-    }
-
-    if (result.closeVideoAuto) {
-        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-        cb_closeVideoAuto.checked = true;
-    }
-});
+//     if (result.closeVideoAuto) {
+//         var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+//         cb_closeVideoAuto.checked = true;
+//     }
+// });
 
 // language check status
 chrome.storage.sync.get('languageCheck', function (result) {
@@ -48,6 +48,20 @@ chrome.storage.sync.get('languageCheck', function (result) {
     }
 });
 
+// Get LMS Base URL
+chrome.storage.sync.get('baseUrl', function (result) {
+    const url_alert = document.querySelector('#url-alert');
+    if(result.baseUrl) {
+        LMSBaseUrl = result.baseUrl;
+        url_alert.hidden = true;
+        crawlInit();
+    } else {
+        url_alert.hidden = false;
+    }
+});
+
+// loadUrl();
+
 fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language json data from 'language.json'
     return response.json();
 }).then(jsondata => {
@@ -58,20 +72,20 @@ fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language
 
 
 // Update to storage
-cb_pastVideo = document.getElementById('hidePastSetting');
-cb_pastVideo.addEventListener("click", function () {
-    chrome.storage.sync.set({ hidePastCheck: cb_pastVideo.checked }, function () {
-        console.log('Past video check box data update to ' + cb_pastVideo.checked)
-    });
-});
+// cb_pastVideo = document.getElementById('hidePastSetting');
+// cb_pastVideo.addEventListener("click", function () {
+//     chrome.storage.sync.set({ hidePastCheck: cb_pastVideo.checked }, function () {
+//         console.log('Past video check box data update to ' + cb_pastVideo.checked)
+//     });
+// });
 
 
-cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-cb_closeVideoAuto.addEventListener('click', function () {
-    chrome.storage.sync.set({ closeVideoAuto: closeVideoAuto.checked }, function () {
-        console.log('close video auto check box data update to ' + closeVideoAuto.checked)
-    });
-})
+// cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+// cb_closeVideoAuto.addEventListener('click', function () {
+//     chrome.storage.sync.set({ closeVideoAuto: closeVideoAuto.checked }, function () {
+//         console.log('close video auto check box data update to ' + closeVideoAuto.checked)
+//     });
+// })
 
 
 // Github icon button
@@ -92,7 +106,7 @@ document.getElementById('feedback').onclick = function () {
 
 // Clipboard copier
 function copyToClipBoard() {
-    const ta = document.createElement("textarea");
+    const ta = document.document.createElement("textarea");
     document.body.appendChild(ta);
     ta.value = 'gangsu1813@naver.com';
     ta.select();
@@ -118,18 +132,18 @@ document.getElementById('language').onclick = function () {
 }
 
 function setLanguage() { //language
-    document.getElementById('indicateSetting').innerHTML = languageJSON['pu_setting']; // Settings
-    document.getElementById('hidePast_info').innerHTML = languageJSON['pu_hidePast_info']; // Hide expired videos automatically
-    document.getElementById('hidePast_text').innerHTML = languageJSON['pu_hidePast']; // Hide expired videos
-    document.getElementById('closeVideoAuto_info').innerHTML = languageJSON['pu_closeVideoAuto_info']; // Close video window after finish
-    document.getElementById('closeVideoAuto_text').innerHTML = languageJSON['pu_closeVideoAuto']; // Close video auto
+    // document.getElementById('indicateSetting').innerHTML = languageJSON['pu_setting']; // Settings
+    // document.getElementById('hidePast_info').innerHTML = languageJSON['pu_hidePast_info']; // Hide expired videos automatically
+    // document.getElementById('hidePast_text').innerHTML = languageJSON['pu_hidePast']; // Hide expired videos
+    // document.getElementById('closeVideoAuto_info').innerHTML = languageJSON['pu_closeVideoAuto_info']; // Close video window after finish
+    // document.getElementById('closeVideoAuto_text').innerHTML = languageJSON['pu_closeVideoAuto']; // Close video auto
     document.getElementById('leaveFeedback').innerHTML = languageJSON['pu_feedback']; // Leave feedback
     document.getElementById('copyEmail').innerHTML = languageJSON['pu_copyMail']; // copy e-mail
     document.getElementById('language').innerHTML = languageJSON['pu_languageButton']; // ko
 }
 
 async function checkCourseList() {
-    const courseListUrl = "https://smartlead.hallym.ac.kr/local/ubion/user";
+    const courseListUrl = LMSBaseUrl + "/local/ubion/user";
     let courseIdList;
 
     await fetch(courseListUrl)
@@ -144,8 +158,17 @@ async function checkCourseList() {
 function parseHtml_pu(html) { // function parseHtml(html text) => check video status
     var cr = getElement(html) // function getElement('html text') return 'html document'
     let courseIdList = [];
+    const login_alert = document.querySelector('#login-alert');
 
     const my_course_lists = cr.querySelector('tbody.my-course-lists');
+
+    // if no logined, open LMS website
+    if (my_course_lists == null && LMSBaseUrl != null) {
+        login_alert.hidden = false;
+        window.open(LMSBaseUrl + "/login.php");
+    }
+    login_alert.hidden = true;
+
     const courseList = my_course_lists.querySelectorAll('a.coursefullname');
     courseList.forEach((course) => {
         courseIdList.push((course.href).split('?id=')[1]);
@@ -169,15 +192,48 @@ async function fetchParser(url) {
 }
 
 async function crawlInit() {
+    // return
+    if(LMSBaseUrl == null) {
+        return
+    }
+
     const courseIdList = await checkCourseList(); // get course id's
     const tasks = await getTaskList(courseIdList);
 
-    // const unSubmitted = tasks.filter((task) => (task.status == false && task.missed == false));
-    console.log(tasks);
+    const unSubmitted = tasks.filter((task) => (task.status == false && task.missed == false));
+
+    unSubmitted.sort((a,b) => {
+        if(new Date(a.due) > new Date(b.due)) {
+            return 1
+        } else if (new Date(a.due) < new Date(b.due)) {
+            return -1
+        }
+        return 0;
+    })
+
+
+    // Hide skeletons
+    const tasks_skeleton = document.querySelectorAll('.skeleton-div');
+    tasks_skeleton.forEach((skeleton) => {
+        skeleton.hidden = true;
+    })
+
+    const tasks_div = document.querySelector('.tasks');
+
+    unSubmitted.forEach((unTask) => {
+        const taskUrlFormer = LMSBaseUrl + "/mod/assign/view.php?id=";
+        const task_div = createTaskDiv(unTask.course,unTask.due,unTask.name, unTask.id);
+        task_div.addEventListener('click', (e) => {
+            window.open(taskUrlFormer + task_div.id);
+        })
+        tasks_div.appendChild(task_div);
+    })
+
+    // console.log(createTaskDiv('가','나','다'));
 }
 
 async function getTaskList(courseIdList) {
-    const taskUrlFormer = "https://smartlead.hallym.ac.kr/mod/assign/index.php?id=";
+    const taskUrlFormer = LMSBaseUrl + "/mod/assign/index.php?id=";
     let tasks = [];
 
     for await (const course_id of courseIdList) {
@@ -218,4 +274,25 @@ async function getTaskList(courseIdList) {
     return tasks
 }
 
-crawlInit();
+function createTaskDiv(course, due, name, id) {
+    const task = document.createElement('div');
+    task.setAttribute('class','task');
+    task.setAttribute('id',id);
+
+    const course_name = document.createElement('a');
+    course_name.setAttribute('class','course-name');
+    course_name.innerHTML = course;
+    const task_due = document.createElement('a');
+    task_due.setAttribute('class','task-due')
+    task_due.innerHTML = due;
+    const task_name = document.createElement('a');
+    task_name.setAttribute('class','task-name');
+    task_name.innerHTML = name;
+
+    task.appendChild(course_name);
+    task.appendChild(task_due);
+    task.appendChild(document.createElement('br'));
+    task.appendChild(task_name);
+
+    return task;
+}

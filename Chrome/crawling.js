@@ -25,6 +25,15 @@ httpRequest.onreadystatechange = getContents; // HTTPRequest - function getConte
 httpRequest.open('GET', prograssURL);  // open Request session
 httpRequest.send(); // Request Data
 
+chrome.storage.sync.get('baseUrl', function (result) {
+    if(typeof result.baseUrl === "undefined") {
+        const url = location.href.split("/course/")[0];
+        chrome.storage.sync.set({ baseUrl: url }, function () {
+            console.log('[Init setting] LMS base url is set to ' + url);
+        });
+    }
+});
+
 function getClassID(url) { // return classID
     var id = url.split('?id='); // Split URL by '?id='
     return id[1]

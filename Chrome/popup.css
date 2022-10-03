@@ -1,21 +1,28 @@
 html, body {
-    width: 250px;
-    height: 140px;
+    width: 400px;
+    height: 450px;
     margin: 0;
     background-color: rgb(252, 252, 252);
 }
 
 .topDiv {
-    height: 40px;
+    height: 50px;
     width: 100%;
     background-color: rgb(80 80 80);
     text-align: center;
     border-radius: 0px 0px 15px 15px;
+    line-height: 50px;
 }
 
 .topDiv a {
-    font-size: 20px;
+    font-size: 25px;
     color: white;
+    transform: translateY(-1px);
+}
+
+.topDiv > img {
+    display: inline-block;
+    transform: translateY(7px);
 }
 
 .indicateSetting {
@@ -25,8 +32,9 @@ html, body {
 
 .settingLine {
     height: 2px;
-    width: 210px;
+    width: 350px;
     background-color: rgb(80 80 80);
+    margin-left: 5%;
     margin-left: 20px;
 }
 
@@ -40,6 +48,71 @@ html, body {
 .settingDiv a {
     font-size: 17px;
     margin-left: 3px;
+}
+
+.tasks {
+    /* background-color: black; */
+    width: 350px;
+    height: 300px;
+    margin-left: 20px;
+    margin-top: 8px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.tasks::-webkit-scrollbar {
+    width: 7px;
+}
+
+.tasks::-webkit-scrollbar-thumb {
+    background-color: #505050;
+    border-radius: 20px;
+}
+
+.tasks::-webkit-scrollbar-track {
+    background-color: white;
+}
+
+.task {
+    font-size: 17px;
+    padding: 10px;
+    background-color: #ececec;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.task:hover {
+    background-color: #FBEFE1;
+}
+
+.task > .course-name {
+    color: #272173;
+    font-weight: bold;
+}
+
+.task > .task-due {
+    color: #C64F00;
+    font-weight: bold;
+    display: inline-block;
+    float: right;
+}
+
+.task > .task-name {
+    display: inline-block;
+    margin-top: 2px;
+    font-size: 19px;
+} 
+
+.tasks > .alert {
+    font-size: 17px;
+    color: rgba(0, 0, 0, 0.74);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    text-align: center;
 }
 
 input[type="checkbox"]{
@@ -154,7 +227,7 @@ span.tooltipText {
 }
 
 .language {
-    top: 185px;
+    bottom: 5px;
     left: 5px;
     position: absolute;
     color: rgb(167, 167, 167);
@@ -165,4 +238,40 @@ span.tooltipText {
 
 .language:hover {
     color: rgb(80 80 80);
+}
+
+.skeleton-div:hover {
+    cursor: default;
+    background-color: #ececec;
+}
+
+.skeleton {
+    animation : skeleton-loading 1s linear infinite alternate;
+}
+
+.skeleton-text {
+    display: inline-block;
+    width: 40%;
+    height: 1rem;
+    border-radius: .2rem;
+}
+
+.skeleton.skeleton-text.task-due {
+    transform: translateY(2.5px);
+}
+
+.skeleton.skeleton-text.task-name {
+    margin-top: 5px;
+    height: 1.25rem;
+    width: 70%;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: rgb(221, 221, 221);
+    }
+
+    100% {
+        background-color: rgb(185, 185, 185);
+    }
 }
