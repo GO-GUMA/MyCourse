@@ -1,37 +1,38 @@
 var languageJSON; // JSON Object => language sets for current LMS language
 let LMSBaseUrl;
-// // Checking Storage to get check status
-// chrome.storage.sync.get('hidePastCheck', function (result) {
-//     if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
-//         var cb_pastCheck = document.getElementById('hidePastSetting');
-//         cb_pastCheck.checked = true;
 
-//         chrome.storage.sync.set({ hidePastCheck: true }, function () {
-//             console.log('[Init setting] Past video check box data update to ' + true);
-//         });
-//     }
+// Checking Storage to get check status
+chrome.storage.sync.get('hidePastCheck', function (result) {
+    if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
+        var cb_pastCheck = document.getElementById('hidePastSetting');
+        cb_pastCheck.checked = true;
 
-//     if (result.hidePastCheck) {
-//         var cb_pastCheck = document.getElementById('hidePastSetting');
-//         cb_pastCheck.checked = true;
-//     }
-// });
+        chrome.storage.sync.set({ hidePastCheck: true }, function () {
+            console.log('[Init setting] Past video check box data update to ' + true);
+        });
+    }
 
-// chrome.storage.sync.get('closeVideoAuto', function (result) {
-//     if (typeof result.closeVideoAuto === "undefined") { // if Extension is running first time
-//         var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-//         cb_closeVideoAuto.checked = true;
+    if (result.hidePastCheck) {
+        var cb_pastCheck = document.getElementById('hidePastSetting');
+        cb_pastCheck.checked = true;
+    }
+});
 
-//         chrome.storage.sync.set({ closeVideoAuto: true }, function () {
-//             console.log('[Init setting] Close video auto check box data update to ' + true);
-//         });
-//     }
+chrome.storage.sync.get('closeVideoAuto', function (result) {
+    if (typeof result.closeVideoAuto === "undefined") { // if Extension is running first time
+        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+        cb_closeVideoAuto.checked = true;
 
-//     if (result.closeVideoAuto) {
-//         var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-//         cb_closeVideoAuto.checked = true;
-//     }
-// });
+        chrome.storage.sync.set({ closeVideoAuto: true }, function () {
+            console.log('[Init setting] Close video auto check box data update to ' + true);
+        });
+    }
+
+    if (result.closeVideoAuto) {
+        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+        cb_closeVideoAuto.checked = true;
+    }
+});
 
 // language check status
 chrome.storage.sync.get('languageCheck', function (result) {
@@ -72,20 +73,20 @@ fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language
 
 
 // Update to storage
-// cb_pastVideo = document.getElementById('hidePastSetting');
-// cb_pastVideo.addEventListener("click", function () {
-//     chrome.storage.sync.set({ hidePastCheck: cb_pastVideo.checked }, function () {
-//         console.log('Past video check box data update to ' + cb_pastVideo.checked)
-//     });
-// });
+cb_pastVideo = document.getElementById('hidePastSetting');
+cb_pastVideo.addEventListener("click", function () {
+    chrome.storage.sync.set({ hidePastCheck: cb_pastVideo.checked }, function () {
+        console.log('Past video check box data update to ' + cb_pastVideo.checked)
+    });
+});
 
 
-// cb_closeVideoAuto = document.getElementById('closeVideoAuto');
-// cb_closeVideoAuto.addEventListener('click', function () {
-//     chrome.storage.sync.set({ closeVideoAuto: closeVideoAuto.checked }, function () {
-//         console.log('close video auto check box data update to ' + closeVideoAuto.checked)
-//     });
-// })
+cb_closeVideoAuto = document.getElementById('closeVideoAuto');
+cb_closeVideoAuto.addEventListener('click', function () {
+    chrome.storage.sync.set({ closeVideoAuto: closeVideoAuto.checked }, function () {
+        console.log('close video auto check box data update to ' + closeVideoAuto.checked)
+    });
+})
 
 
 // Github icon button
@@ -106,7 +107,7 @@ document.getElementById('feedback').onclick = function () {
 
 // Clipboard copier
 function copyToClipBoard() {
-    const ta = document.document.createElement("textarea");
+    const ta = document.createElement("textarea");
     document.body.appendChild(ta);
     ta.value = 'gangsu1813@naver.com';
     ta.select();
@@ -132,14 +133,16 @@ document.getElementById('language').onclick = function () {
 }
 
 function setLanguage() { //language
-    // document.getElementById('indicateSetting').innerHTML = languageJSON['pu_setting']; // Settings
-    // document.getElementById('hidePast_info').innerHTML = languageJSON['pu_hidePast_info']; // Hide expired videos automatically
-    // document.getElementById('hidePast_text').innerHTML = languageJSON['pu_hidePast']; // Hide expired videos
-    // document.getElementById('closeVideoAuto_info').innerHTML = languageJSON['pu_closeVideoAuto_info']; // Close video window after finish
-    // document.getElementById('closeVideoAuto_text').innerHTML = languageJSON['pu_closeVideoAuto']; // Close video auto
+    document.getElementById('setting-title').innerHTML = languageJSON['pu_setting']; // Settings
+    document.getElementById('hidePast_info').innerHTML = languageJSON['pu_hidePast_info']; // Hide expired videos automatically
+    document.getElementById('hidePast_text').innerHTML = languageJSON['pu_hidePast']; // Hide expired videos
+    document.getElementById('closeVideoAuto_info').innerHTML = languageJSON['pu_closeVideoAuto_info']; // Close video window after finish
+    document.getElementById('closeVideoAuto_text').innerHTML = languageJSON['pu_closeVideoAuto']; // Close video auto
     document.getElementById('leaveFeedback').innerHTML = languageJSON['pu_feedback']; // Leave feedback
     document.getElementById('copyEmail').innerHTML = languageJSON['pu_copyMail']; // copy e-mail
     document.getElementById('language').innerHTML = languageJSON['pu_languageButton']; // ko
+    document.getElementById('myTask').innerHTML = languageJSON['pu_myTask']; // My tasks
+    document.getElementById('course-settings-title').innerHTML = languageJSON['pu_courseSettings']; // Course settings
 }
 
 async function checkCourseList() {
@@ -192,7 +195,6 @@ async function fetchParser(url) {
 }
 
 async function crawlInit() {
-    // return
     if(LMSBaseUrl == null) {
         return
     }
@@ -211,7 +213,6 @@ async function crawlInit() {
         return 0;
     })
 
-
     // Hide skeletons
     const tasks_skeleton = document.querySelectorAll('.skeleton-div');
     tasks_skeleton.forEach((skeleton) => {
@@ -228,8 +229,6 @@ async function crawlInit() {
         })
         tasks_div.appendChild(task_div);
     })
-
-    // console.log(createTaskDiv('가','나','다'));
 }
 
 async function getTaskList(courseIdList) {
@@ -274,6 +273,14 @@ async function getTaskList(courseIdList) {
     return tasks
 }
 
+/**
+ * Create task div for diplay at popup
+ * @param {String} course Course name
+ * @param {String} due Task due date
+ * @param {String} name Task name
+ * @param {String} id Task LMS id
+ * @returns task div element
+ */
 function createTaskDiv(course, due, name, id) {
     const task = document.createElement('div');
     task.setAttribute('class','task');
@@ -296,3 +303,21 @@ function createTaskDiv(course, due, name, id) {
 
     return task;
 }
+
+
+// Setting control
+let settingIsOn = false;
+const setting_btn = document.getElementById('setting-btn');
+const setting_div = document.querySelector('.setting-div');
+setting_btn.addEventListener('click', () => {
+    if(settingIsOn) {
+        // hide
+        setting_btn.querySelector('i').style.color = 'white';
+        setting_div.hidden = true;
+    } else {
+        //show
+        setting_div.hidden = false;
+        setting_btn.querySelector('i').style.color = 'black';
+    }
+    settingIsOn = !settingIsOn;
+})

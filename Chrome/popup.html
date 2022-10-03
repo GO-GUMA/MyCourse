@@ -4,8 +4,7 @@
 <head>
     <link rel="stylesheet" href="popup.css">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
-        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -13,6 +12,32 @@
         <!-- <div style="height: 2px"></div> -->
         <img src="/images/icon.png" height="35px">
         <a>MyCourse</a>
+        <a class="setting" id="setting-btn">
+            <i class="bi bi-sliders"></i>
+        </a>
+    </div>
+
+    <div class="setting-div" hidden>
+        <a class="setting-title" id="setting-title">설정</a>
+        <a class="setting-title-mini" id="course-settings-title">강의 설정</a>
+        <div style="height: 3px"></div>
+        <div>
+            <a class="tooltip">
+                <span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;"id="hidePast_info">기한이 지난 영상을 자동으로 숨깁니다</span>
+                <span id="hidePast_text">지난 영상 숨기기</span>
+            </a>
+            <input type="checkbox" name="hidePastSetting" id="hidePastSetting">
+            <label for="hidePastSetting" style="position: absolute; top: 84px; right: 25px"></label>
+        </div>
+        <div style="height: 3px"></div>
+        <div>
+            <a class="tooltip">
+                <span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px" id="closeVideoAuto_info">재생 완료시 창이 자동으로 닫힙니다</span>
+                <span id="closeVideoAuto_text">영상 자동종료</span>
+            </a>
+            <input type="checkbox" name="closeVideoAuto" id="closeVideoAuto">
+            <label for="closeVideoAuto" style="position: absolute; top: 112px; right: 25px"></label>
+        </div>
     </div>
 
     <div style="height: 12px"></div>
@@ -63,13 +88,13 @@
     </div> -->
 
     <div class="iconDiv">
-        <a class="tooltip"><i class="fas fa-comment" id="feedback"></i><span class="tooltipText" id="leaveFeedback"
+        <a class="tooltip"><i class="bi bi-chat-fill" id="feedback"></i><span class="tooltipText" id="leaveFeedback"
                 style="width: 100px;">피드백 남기기</span></a>
         &nbsp;
-        <a class="tooltip"><i class="fas fa-envelope" id="mailIcon"></i><span class="tooltipText" id="copyEmail"
+        <a class="tooltip"><i class="bi bi-envelope-fill" id="mailIcon"></i><span class="tooltipText" id="copyEmail"
                 style="width: 100px;">메일 주소 복사</span></a>
         &nbsp;
-        <a class="tooltip"><i class="fab fa-github" id="githubIcon"></i><span class="tooltipText"
+        <a class="tooltip"><i class="bi bi-github" id="githubIcon"></i><span class="tooltipText"
                 style="width: 60px;">Github</span></a>
     </div>
 

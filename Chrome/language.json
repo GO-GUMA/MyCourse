@@ -19,7 +19,9 @@
         "pu_closeVideoAuto_info" : "재생 완료시 창이 자동으로 닫힙니다",
         "pu_feedback": "피드백 남기기",
         "pu_copyMail": "메일 주소 복사",
-        "pu_languageButton" : "en"
+        "pu_languageButton" : "en",
+        "pu_myTask" : "나의 과제",
+        "pu_courseSettings" : "강의 설정"
     },
     "en" : {
         "title" : "Missed videos",
@@ -41,7 +43,9 @@
         "pu_closeVideoAuto_info" : "Close video window after finish",
         "pu_feedback": "Leave feedback",
         "pu_copyMail": "Copy e-mail",
-        "pu_languageButton" : "ko"
+        "pu_languageButton" : "ko",
+        "pu_myTask" : "MY TASK",
+        "pu_courseSettings" : "Course settings"
     },
     "ja" : {
         "title" : "Missed videos",
