@@ -248,10 +248,14 @@ async function getTaskList(courseIdList) {
         const course_name = (document_res.querySelector('div.coursename > h1 > a').innerHTML).split("[")[0];
         const tbody_list = document_res.querySelector('table.generaltable > tbody');
         if(tbody_list ?? false) {
-            course_list = tbody_list.querySelectorAll('tr:nth-child(odd)');
+            var course_list = tbody_list.querySelectorAll('tr');
 
-            course_list.forEach((course) => {
-                const task_name = course.querySelector('a').innerHTML; // String - Task name
+            for (var i = 0; i < course_list.length; i++) {
+                const course = course_list[i];
+                const task_name = course.querySelector('a')?.innerHTML ?? true; // String - Task name
+                if(task_name == true) {
+                    continue;
+                }
                 const task_id = (course.querySelector('a').href).split('?id=')[1];
                 const task_status = (course.querySelector('td.cell.c3').innerHTML == "미제출") ? false : true; // Boolean - Task status
                 const task_due = course.querySelector('td.cell.c2').innerHTML; // Boolean - Task status
@@ -266,10 +270,11 @@ async function getTaskList(courseIdList) {
                 task.missed = ((new Date(task_due) - new Date()) < 0) ? true : false;
 
                 tasks.push(task);
-            })
+            }
         }
     }
 
+    console.log(tasks);
     return tasks
 }
 
