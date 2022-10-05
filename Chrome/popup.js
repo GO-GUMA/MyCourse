@@ -1,6 +1,5 @@
 var languageJSON; // JSON Object => language sets for current LMS language
 let LMSBaseUrl;
-const tasks_skeleton = document.querySelectorAll('.skeleton-div');
 
 // Checking Storage to get check status
 chrome.storage.sync.get('hidePastCheck', function (result) {
@@ -183,14 +182,6 @@ function getElement(html) { // Html text to 'html document'
     return div;
 }
 
-async function fetchParser(url) {
-    await fetch(url)
-    .then((response) => {return response.text()})
-    .then((html) => {
-        return getElement(html);
-    })
-}
-
 async function crawlInit() {
     if(LMSBaseUrl == null) {
         return
@@ -211,11 +202,6 @@ async function crawlInit() {
     })
 
     hideSkeleton();
-    // Hide skeletons
-    // const tasks_skeleton = document.querySelectorAll('.skeleton-div');
-    // tasks_skeleton.forEach((skeleton) => {
-    //     skeleton.hidden = true;
-    // })
 
     const tasks_div = document.querySelector('.tasks');
 
@@ -307,6 +293,7 @@ function createTaskDiv(course, due, name, id) {
     return task;
 }
 
+const tasks_skeleton = document.querySelectorAll('.skeleton-div');
 function hideSkeleton() {
     tasks_skeleton.forEach((skeleton) => {
         skeleton.hidden = true;
@@ -314,19 +301,17 @@ function hideSkeleton() {
 }
 
 
-// Setting control
+// Setting button control
 let settingIsOn = false;
 const setting_btn = document.getElementById('setting-btn');
 const setting_div = document.querySelector('.setting-div');
 setting_btn.addEventListener('click', () => {
-    if(settingIsOn) {
-        // hide
+    if(settingIsOn) { // hide
         setting_btn.querySelector('i').style.color = 'white';
         setting_div.hidden = true;
-    } else {
-        //show
+    } else { //show
         setting_div.hidden = false;
         setting_btn.querySelector('i').style.color = 'black';
     }
-    settingIsOn = !settingIsOn;
+    settingIsOn = !settingIsOn; // toggle
 })
