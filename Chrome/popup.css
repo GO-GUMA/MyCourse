@@ -246,7 +246,7 @@ span.tooltipText {
 }
 
 .skeleton {
-    animation : skeleton-loading 1s linear infinite alternate;
+    animation : skeleton-loading .5s linear infinite alternate;
 }
 
 .skeleton-text {
@@ -268,7 +268,7 @@ span.tooltipText {
 
 @keyframes skeleton-loading {
     0% {
-        background-color: rgb(221, 221, 221);
+        background-color: rgb(223, 223, 223);
     }
 
     100% {

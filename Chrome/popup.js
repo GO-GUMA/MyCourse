@@ -1,10 +1,11 @@
 var languageJSON; // JSON Object => language sets for current LMS language
 let LMSBaseUrl;
+const tasks_skeleton = document.querySelectorAll('.skeleton-div');
 
 // Checking Storage to get check status
 chrome.storage.sync.get('hidePastCheck', function (result) {
+    const cb_pastCheck = document.getElementById('hidePastSetting');
     if (typeof result.hidePastCheck === "undefined") { // if Extension is running first time
-        var cb_pastCheck = document.getElementById('hidePastSetting');
         cb_pastCheck.checked = true;
 
         chrome.storage.sync.set({ hidePastCheck: true }, function () {
@@ -13,23 +14,20 @@ chrome.storage.sync.get('hidePastCheck', function (result) {
     }
 
     if (result.hidePastCheck) {
-        var cb_pastCheck = document.getElementById('hidePastSetting');
         cb_pastCheck.checked = true;
     }
 });
 
 chrome.storage.sync.get('closeVideoAuto', function (result) {
+    const cb_closeVideoAuto = document.getElementById('closeVideoAuto');
     if (typeof result.closeVideoAuto === "undefined") { // if Extension is running first time
-        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
         cb_closeVideoAuto.checked = true;
-
         chrome.storage.sync.set({ closeVideoAuto: true }, function () {
             console.log('[Init setting] Close video auto check box data update to ' + true);
         });
     }
 
     if (result.closeVideoAuto) {
-        var cb_closeVideoAuto = document.getElementById('closeVideoAuto');
         cb_closeVideoAuto.checked = true;
     }
 });
@@ -51,17 +49,17 @@ chrome.storage.sync.get('languageCheck', function (result) {
 
 // Get LMS Base URL
 chrome.storage.sync.get('baseUrl', function (result) {
-    const url_alert = document.querySelector('#url-alert');
+    const url_alert = document.querySelector('#url-alert'); // 강의 최초 접속 안내
     if(result.baseUrl) {
         LMSBaseUrl = result.baseUrl;
         url_alert.hidden = true;
-        crawlInit();
+        crawlInit(); // 과제 불러오기 시작
     } else {
+        hideSkeleton();
         url_alert.hidden = false;
     }
 });
 
-// loadUrl();
 
 fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language json data from 'language.json'
     return response.json();
@@ -70,7 +68,6 @@ fetch(chrome.runtime.getURL('language.json')).then(response => { // Get language
     languageJSON = jsondata[document.documentElement.lang]; // Set languageJSON Object to current LMS json 
     setLanguage(); // Run langauge setter
 });
-
 
 // Update to storage
 cb_pastVideo = document.getElementById('hidePastSetting');
@@ -104,17 +101,6 @@ document.getElementById('mailIcon').onclick = function () {
 document.getElementById('feedback').onclick = function () {
     window.open('http://go-guma.com/bbs/board.php?bo_table=MyCourse', '_blank');
 }
-
-// Clipboard copier
-function copyToClipBoard() {
-    const ta = document.createElement("textarea");
-    document.body.appendChild(ta);
-    ta.value = 'gangsu1813@naver.com';
-    ta.select();
-    document.execCommand('copy')
-    document.body.removeChild(ta);
-}
-
 // English button
 document.getElementById('language').onclick = function () {
     document.documentElement.lang = languageJSON['pu_languageButton']; // Set html[lang=''] as (lang == 'en') -> 'ko' or (lang == 'ko') -> 'en'
@@ -131,6 +117,17 @@ document.getElementById('language').onclick = function () {
         setLanguage(); // Run langauge setter
     });
 }
+
+// Clipboard copier
+function copyToClipBoard() {
+    const ta = document.createElement("textarea");
+    document.body.appendChild(ta);
+    ta.value = 'gangsu1813@naver.com';
+    ta.select();
+    document.execCommand('copy')
+    document.body.removeChild(ta);
+}
+
 
 function setLanguage() { //language
     document.getElementById('setting-title').innerHTML = languageJSON['pu_setting']; // Settings
@@ -213,11 +210,12 @@ async function crawlInit() {
         return 0;
     })
 
+    hideSkeleton();
     // Hide skeletons
-    const tasks_skeleton = document.querySelectorAll('.skeleton-div');
-    tasks_skeleton.forEach((skeleton) => {
-        skeleton.hidden = true;
-    })
+    // const tasks_skeleton = document.querySelectorAll('.skeleton-div');
+    // tasks_skeleton.forEach((skeleton) => {
+    //     skeleton.hidden = true;
+    // })
 
     const tasks_div = document.querySelector('.tasks');
 
@@ -307,6 +305,12 @@ function createTaskDiv(course, due, name, id) {
     task.appendChild(task_name);
 
     return task;
+}
+
+function hideSkeleton() {
+    tasks_skeleton.forEach((skeleton) => {
+        skeleton.hidden = true;
+    })
 }
 
 
