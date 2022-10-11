@@ -19,11 +19,13 @@
 
     <div class="setting-div" hidden>
         <a class="setting-title" id="setting-title">설정</a>
+        <!-- Video settings -->
         <a class="setting-title-mini" id="course-settings-title">강의 설정</a>
         <div style="height: 3px"></div>
         <div>
             <a class="tooltip">
-                <span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;"id="hidePast_info">기한이 지난 영상을 자동으로 숨깁니다</span>
+                <span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;" id="hidePast_info">기한이 지난
+                    영상을 자동으로 숨깁니다</span>
                 <span id="hidePast_text">지난 영상 숨기기</span>
             </a>
             <input type="checkbox" name="hidePastSetting" id="hidePastSetting">
@@ -32,11 +34,24 @@
         <div style="height: 3px"></div>
         <div>
             <a class="tooltip">
-                <span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px" id="closeVideoAuto_info">재생 완료시 창이 자동으로 닫힙니다</span>
+                <span class="tooltipText" style="width: 210px; font-size: 12px; left: 90px" id="closeVideoAuto_info">재생
+                    완료시 창이 자동으로 닫힙니다</span>
                 <span id="closeVideoAuto_text">영상 자동종료</span>
             </a>
             <input type="checkbox" name="closeVideoAuto" id="closeVideoAuto">
             <label for="closeVideoAuto" style="position: absolute; top: 112px; right: 25px"></label>
+        </div>
+        <br>
+        <!-- Tasks settings -->
+        <a class="setting-title-mini" id="tasks-settings-title">과제 설정</a>
+        <div style="height: 3px"></div>
+        <div>
+            <a class="tooltip">
+                <span class="tooltipText" style="width: 220px; font-size: 12px; left: 100px;" id="hidePastTask_info">기한이 지난 과제를 보여주지 않습니다.</span>
+                <span id="hidePastTask_text">지난 과제 숨기기</span>
+            </a>
+            <input type="checkbox" name="hidePastTaskSetting" id="hidePastTaskSetting">
+            <label for="hidePastTaskSetting" style="position: absolute; top: 185px; right: 25px"></label>
         </div>
     </div>
 

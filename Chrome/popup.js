@@ -1,5 +1,6 @@
 var languageJSON; // JSON Object => language sets for current LMS language
 let LMSBaseUrl;
+let hidePastTask = false;
 
 // Checking Storage to get check status
 chrome.storage.sync.get('hidePastCheck', function (result) {
@@ -28,6 +29,23 @@ chrome.storage.sync.get('closeVideoAuto', function (result) {
 
     if (result.closeVideoAuto) {
         cb_closeVideoAuto.checked = true;
+    }
+});
+
+// Hide missed tasks
+chrome.storage.sync.get('hidePastTaskCheck', function (result) {
+    const cb_pastTaskCheck = document.getElementById('hidePastTaskSetting');
+    if (typeof result.hidePastTaskCheck === "undefined") { // if Extension is running first time
+        cb_pastTaskCheck.checked = true;
+
+        chrome.storage.sync.set({ hidePastTaskCheck: true }, function () {
+            console.log('[Init setting] hide missed task ' + true);
+        });
+    }
+
+    if (result.hidePastTaskCheck) {
+        hidePastTask = true;
+        cb_pastTaskCheck.checked = true;
     }
 });
 
@@ -81,6 +99,15 @@ cb_closeVideoAuto = document.getElementById('closeVideoAuto');
 cb_closeVideoAuto.addEventListener('click', function () {
     chrome.storage.sync.set({ closeVideoAuto: closeVideoAuto.checked }, function () {
         console.log('close video auto check box data update to ' + closeVideoAuto.checked)
+    });
+})
+
+// hidePastTaskSetting
+cb_hidePastTaskSetting = document.getElementById('hidePastTaskSetting');
+cb_hidePastTaskSetting.addEventListener('click', function () {
+    chrome.storage.sync.set({ hidePastTaskCheck: hidePastTaskSetting.checked }, function () {
+        console.log('Hide past data check box data update to ' + cb_hidePastTaskSetting.checked);
+        location.reload();
     });
 })
 
@@ -139,6 +166,9 @@ function setLanguage() { //language
     document.getElementById('language').innerHTML = languageJSON['pu_languageButton']; // ko
     document.getElementById('myTask').innerHTML = languageJSON['pu_myTask']; // My tasks
     document.getElementById('course-settings-title').innerHTML = languageJSON['pu_courseSettings']; // Course settings
+    document.getElementById('hidePastTask_info').innerHTML = languageJSON['pu_hidePastTask_info']; // Course settings
+    document.getElementById('hidePastTask_text').innerHTML = languageJSON['pu_hidePastTask_text']; // Course settings
+    document.getElementById('tasks-settings-title').innerHTML = languageJSON['pu_tasks-settings-title']; // Course settings
 }
 
 async function checkCourseList() {
@@ -190,7 +220,12 @@ async function crawlInit() {
     const courseIdList = await checkCourseList(); // get course id's
     const tasks = await getTaskList(courseIdList);
 
-    const unSubmitted = tasks.filter((task) => (task.status == false && task.missed == false));
+    let unSubmitted;
+    if(hidePastTask == false) {
+        unSubmitted = tasks.filter((task) => (task.status == false));
+    } else {
+        unSubmitted = tasks.filter((task) => (task.status == false && task.missed == false));
+    }
 
     unSubmitted.sort((a,b) => {
         if(new Date(a.due) > new Date(b.due)) {
@@ -258,7 +293,7 @@ async function getTaskList(courseIdList) {
         }
     }
 
-    console.log(tasks);
+    // console.log(tasks);
     return tasks
 }
 

@@ -21,7 +21,10 @@
         "pu_copyMail": "메일 주소 복사",
         "pu_languageButton" : "en",
         "pu_myTask" : "나의 과제",
-        "pu_courseSettings" : "강의 설정"
+        "pu_courseSettings" : "강의 설정",
+        "pu_hidePastTask_text" : "지난 과제 숨기기",
+        "pu_hidePastTask_info" : "기한이 지난 과제를 보여주지 않습니다.",
+        "pu_tasks-settings-title" : "과제 설정"
     },
     "en" : {
         "title" : "Missed videos",
@@ -45,7 +48,10 @@
         "pu_copyMail": "Copy e-mail",
         "pu_languageButton" : "ko",
         "pu_myTask" : "MY TASK",
-        "pu_courseSettings" : "Course settings"
+        "pu_courseSettings" : "Course settings",
+        "pu_hidePastTask_text" : "Hide missed task",
+        "pu_hidePastTask_info" : "Hide late missed task.",
+        "pu_tasks-settings-title" : "Task settings"
     },
     "ja" : {
         "title" : "Missed videos",
