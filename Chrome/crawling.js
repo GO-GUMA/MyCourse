@@ -1,3 +1,4 @@
+// Init
 const activeUrl = window.location.href; // Get Current URL
 const prograssURL = "https://smartlead.hallym.ac.kr/report/ubcompletion/user_progress.php?id=" + getClassID(activeUrl); // function getClassID() return classID
 var prograssArr = [], missdVideo = []; // prograssArr = ['DONE','LATE','NONE']
@@ -190,6 +191,7 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
     noVideoAlert.setAttribute('hidden', true);
     noVideoAlert.innerHTML = languageJSON['noMissedVideo']; // '미수강 영상이 없습니다';
 
+
     if (prograssArr.length == 0) {
         noVideoAlert.innerHTML = languageJSON['noVideo']; // '동영상이 없는 강의 입니다';
         cb_div.hidden = true;
@@ -205,6 +207,8 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
     var pastCnt = 0 // for counting missedVideo and it is past
 
     var missedCnt = mVideo.length; // Whole video missed Video Count
+
+    console.log(prograssArr.length)
 
     if (missedCnt == 0 && prograssArr.length != 0) {
         noVideoAlert.innerHTML = languageJSON['noMissedAndPast']; //'지난 영상 & 미수강 영상이 없습니다';
@@ -240,7 +244,8 @@ function displayBoard(mVideo, errorStat = false) { // function displayBoard(arra
                 pastCnt += 1
             }
 
-            videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
+            videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;" class="time-left" data-time="' + dueCheck + '"> ' + millToTime(dueLeft) + ' </span>' // Due date
+            // videoDiv.innerHTML += '<span style="color:#f3773a; font-size: 12px;" class="time-left"> ' + millToTime(dueLeft) + ' (' + mVideo[i][3].substr(6) + ')</span>' // Due date
             videoDiv.innerHTML += '<span style="color:#31708f; font-size: 12px;">&nbsp;' + mVideo[i][4] + '</span>' // Video running time
 
             // Working 2022Feb26
@@ -333,6 +338,7 @@ function getContents() { // function getContents() => check readyStatus and run 
 }
 
 function millToTime(clacTime) { // function millToTime(int milliseconds) return 'DD일 HH시 MM분 SS초 남음 or 지남'
+    // console.log(clacTime)
     var leftOrPast = languageJSON['timeLeft']; // '남음'; // leftOrPast for result String
 
     if (clacTime < 0) { // if clacTime is lower that o = Video Expired
@@ -350,10 +356,10 @@ function millToTime(clacTime) { // function millToTime(int milliseconds) return 
     var dueSecLeft = clacTime; // Get Seconds
 
     // Switch to Int
-    var date = parseInt(dueDateLeft);
-    var hour = parseInt(dueHourLeft);
-    var min = parseInt(dueMinLeft);
-    var sec = parseInt(dueSecLeft);
+    var date = ('00' + parseInt(dueDateLeft)).slice(-2);
+    var hour = ('00' + parseInt(dueHourLeft)).slice(-2);
+    var min = ('00' + parseInt(dueMinLeft)).slice(-2);
+    var sec = ('00' + parseInt(dueSecLeft)).slice(-2);
 
     var result = date + languageJSON['days'] + ' ' + hour + languageJSON['hours'] + ' ' + min + languageJSON['minutes'] + ' ' + sec + languageJSON['seconds'] + ' ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
     // var result = date + '일 ' + hour + '시간 ' + min + '분 ' + sec + '초 ' + leftOrPast; // final result string = 'DD일 HH시 MM분 SS초 남음 or 지남'
