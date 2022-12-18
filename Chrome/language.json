@@ -24,7 +24,10 @@
         "pu_courseSettings" : "강의 설정",
         "pu_hidePastTask_text" : "지난 과제 숨기기",
         "pu_hidePastTask_info" : "기한이 지난 과제를 보여주지 않습니다.",
-        "pu_tasks-settings-title" : "과제 설정"
+        "pu_tasks-settings-title" : "과제 설정",
+        "pu_empty-alert" : "미제출 과제가 없습니다",
+        "pu_login-alert" : "LMS 로그인을 해 주세요",
+        "pu_url-alert" : "LMS의 강좌에 접속을 해 주세요"
     },
     "en" : {
         "title" : "Missed videos",
@@ -51,7 +54,10 @@
         "pu_courseSettings" : "Course settings",
         "pu_hidePastTask_text" : "Hide missed task",
         "pu_hidePastTask_info" : "Hide late missed task.",
-        "pu_tasks-settings-title" : "Task settings"
+        "pu_tasks-settings-title" : "Task settings",
+        "pu_empty-alert" : "There are no unsubmitted task",
+        "pu_login-alert" : "Please login to LMS",
+        "pu_url-alert" : "Please visit any LMS's lecture"
     },
     "ja" : {
         "title" : "Missed videos",

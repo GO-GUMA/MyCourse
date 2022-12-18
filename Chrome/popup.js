@@ -169,6 +169,9 @@ function setLanguage() { //language
     document.getElementById('hidePastTask_info').innerHTML = languageJSON['pu_hidePastTask_info']; // Course settings
     document.getElementById('hidePastTask_text').innerHTML = languageJSON['pu_hidePastTask_text']; // Course settings
     document.getElementById('tasks-settings-title').innerHTML = languageJSON['pu_tasks-settings-title']; // Course settings
+    document.getElementById('empty-alert').innerHTML = languageJSON['pu_empty-alert']; // Course settings
+    document.getElementById('login-alert').innerHTML = languageJSON['pu_login-alert']; // Course settings
+    document.getElementById('url-alert').innerHTML = languageJSON['pu_url-alert']; // Course settings
 }
 
 async function checkCourseList() {
@@ -248,6 +251,16 @@ async function crawlInit() {
         })
         tasks_div.appendChild(task_div);
     })
+
+    // Check if shown task is empty then show 'Not exist message' 
+    const task_count = tasks_div.querySelectorAll('.task:not(.skeleton-div)').length;
+    const empty_alert = document.querySelector('#empty-alert');
+
+    if(task_count == 0) {
+        empty_alert.hidden = false
+    } else {
+        empty_alert.hidden = true
+    }
 }
 
 async function getTaskList(courseIdList) {
